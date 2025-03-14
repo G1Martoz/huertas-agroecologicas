@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Featured Content Cards -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="ms-3">
+                    <h5 class="mb-0">Últimas Noticias</h5>
+                    <small class="text-muted">Mantente informado sobre agricultura urbana</small>
+                </div>
+            </div>
+            <p class="card-text">Descubre las últimas tendencias y novedades en el mundo de las huertas urbanas.</p>
+            <a href="{% url 'noticias' %}" class="btn btn-primary">Ver Noticias</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="ms-3">
+                    <h5 class="mb-0">Explora Huertas</h5>
+                    <small class="text-muted">Conoce proyectos de la comunidad</small>
+                </div>
+            </div>
+            <p class="card-text">Explora las huertas de nuestra comunidad y comparte tus experiencias.</p>
+            <a href="{% url 'huerta-list' %}" class="btn btn-success">Ver Huertas</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="ms-3">
+                    <h5 class="mb-0">Únete al Foro</h5>
+                    <small class="text-muted">Comparte y aprende con la comunidad</small>
+                </div>
+            </div>
+            <p class="card-text">Participa en discusiones y comparte tus conocimientos con otros agricultores urbanos.</p>
+            <a href="{% url 'foro' %}" class="btn btn-info text-white">Ir al Foro</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

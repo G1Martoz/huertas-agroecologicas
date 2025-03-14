@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Create New Topic Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="ms-3 flex-grow-1">
+                    <div class="form-control text-muted" style="cursor: pointer; background-color: var(--fb-hover); border-radius: 20px;" onclick="alert('Función de crear tema en desarrollo')">
+                        ¿Sobre qué quieres hablar?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topics List -->
+    {% if temas %}
+        {% for tema in temas %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                            {{ tema.autor.username|first|upper }}
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">{{ tema.autor.username }}</h6>
+                            <small class="text-muted">{{ tema.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                        </div>
+                    </div>
+                    
+                    <h5 class="card-title">{{ tema.titulo }}</h5>
+                    <p class="card-text">{{ tema.descripcion }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
+                        <div>
+                            <span class="text-muted">Categoría: {{ tema.categoria }}</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-light me-2"><i class="fas fa-thumbs-up me-1"></i>Me gusta</button>
+                            <button class="btn btn-light"><i class="fas fa-comment me-1"></i>Comentar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <div class="card-body text-center">
+                <p class="mb-0">No hay temas en el foro todavía. ¡Sé el primero en crear uno!</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

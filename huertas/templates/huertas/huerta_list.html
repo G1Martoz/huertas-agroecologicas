@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Create Garden Post Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="ms-3 flex-grow-1">
+                    <div class="form-control text-muted" style="cursor: pointer; background-color: var(--fb-hover); border-radius: 20px;" onclick="alert('Función de crear huerta en desarrollo')">
+                        ¿Quieres compartir tu huerta?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gardens List -->
+    {% for huerta in huertas %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                    {{ huerta.propietario.username|first|upper }}
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">{{ huerta.propietario.username }}</h6>
+                    <small class="text-muted">{{ huerta.get_tipo_plantacion_display }}</small>
+                </div>
+            </div>
+
+            <h5 class="card-title">{{ huerta.get_cultivo_display }}</h5>
+            {% if huerta.descripcion %}
+            <p class="card-text">{{ huerta.descripcion }}</p>
+            {% endif %}
+
+            {% if huerta.imagen %}
+            <div class="garden-image-container mb-3">
+                <img src="{{ huerta.imagen.url }}" alt="{{ huerta.get_cultivo_display }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                <div class="text-muted">
+                    <span class="me-3"><i class="fas fa-calendar-alt me-1"></i>Siembra: {{ huerta.get_estacion_siembra_display }}</span>
+                    <span><i class="fas fa-calendar-check me-1"></i>Cosecha: {{ huerta.get_estacion_cosecha_display }}</span>
+                </div>
+                <div>
+                    <button class="btn btn-light me-2"><i class="fas fa-thumbs-up me-1"></i>Me gusta</button>
+                    <button class="btn btn-light"><i class="fas fa-comment me-1"></i>Comentar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="my-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
