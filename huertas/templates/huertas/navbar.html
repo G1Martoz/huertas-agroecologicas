@@ -21,6 +21,9 @@
                 <li class="nav-item">
                     <a class="nav-link{% if request.resolver_match.url_name == 'acerca-de' %} active{% endif %}" href="{% url 'acerca-de' %}">Acerca de</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.resolver_match.url_name == 'register' %} active{% endif %}" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i>Registrarse</a>
+                </li>
             </ul>
         </div>
     </div>

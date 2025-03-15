@@ -8,6 +8,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('captcha/', include('captcha.urls')),
+    path('', include('users.urls')),  # Add users URLs
     path('', include('huertas.urls')),
     path('', include('noticias.urls')),
     path('', include('foro.urls')),

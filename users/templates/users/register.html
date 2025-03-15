@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4" style="color: #1877f2;">Crear cuenta nueva</h2>
+                    <p class="text-center text-muted mb-4">Es rápido y fácil.</p>
+                    
+                    <hr class="mb-4">
+                    
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post" class="needs-validation">
+                        {% csrf_token %}
+                        
+                        <div class="row g-3">
+                            {% for field in form %}
+                            <div class="col-12">
+                                <div class="form-group mb-4">
+                                    {% if field.name != 'captcha' %}
+                                        <label for="{{ field.id_for_label }}" class="form-label fw-bold">
+                                            {{ field.label }}
+                                            {% if field.field.required %}
+                                                <span class="text-danger">*</span>
+                                            {% endif %}
+                                        </label>
+                                        <input type="{{ field.field.widget.input_type }}" 
+                                               name="{{ field.name }}" 
+                                               id="{{ field.id_for_label }}" 
+                                               class="form-control form-control-lg"
+                                               {% if field.value %}value="{{ field.value }}"{% endif %}
+                                               {% if field.field.required %}required{% endif %}>
+                                    
+                                        {% if field.name == 'password1' %}
+                                        <i class="fas fa-info-circle text-primary" 
+                                           style="cursor: pointer;"
+                                           data-bs-toggle="tooltip" 
+                                           data-bs-placement="right"
+                                           title="Haz clic para ver consejos de contraseña"
+                                           onclick="showPasswordTips()"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="captcha-wrapper p-4 bg-light rounded">
+                                            <label class="form-label fw-bold mb-3">Verificación de seguridad</label>
+                                            <div class="captcha-container" style="transform: scale(1.2); transform-origin: left;">
+                                                {{ field }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if field.help_text %}
+                                        <div class="form-text small text-muted">{{ field.help_text }}</div>
+                                    {% endif %}
+                                    
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                Registrarse
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast para consejos de contraseña -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="passwordToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-primary text-white">
+            <strong class="me-auto">Consejos para una contraseña segura</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <ul class="mb-0">
+                <li>Usa al menos 8 caracteres</li>
+                <li>Combina letras mayúsculas y minúsculas</li>
+                <li>Incluye números y símbolos</li>
+                <li>Evita información personal</li>
+                <li>No uses contraseñas comunes</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    .form-control:focus {
+        border-color: #1877f2;
+        box-shadow: 0 0 0 0.2rem rgba(24, 119, 242, 0.25);
+    }
+    .captcha-wrapper {
+        border: 1px solid #ddd;
+        margin: 20px 0;
+    }
+    .btn-success {
+        background-color: #42b72a;
+        border: none;
+    }
+    .btn-success:hover {
+        background-color: #36a420;
+    }
+    .toast {
+        min-width: 350px;
+    }
+</style>
+
+<script>
+function showPasswordTips() {
+    const toast = new bootstrap.Toast(document.getElementById('passwordToast'));
+    toast.show();
+}
+
+// Inicializar tooltips de Bootstrap
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>
+{% endblock %}
